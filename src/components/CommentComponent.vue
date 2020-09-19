@@ -1,9 +1,10 @@
 <template>
   <div class="col-12">
     <div class="card">
+      <i class="fa fa-trash-o text-danger align-self-end pt-1 pr-2 pointer" aria-hidden="true" @click="deletePost" v-if="this.isCreator == this.commentProp.creatorEmail" ></i>
       <div class="card-body">
-        <h4 class="card-title">Author: {{comment.creatorEmail}} </h4>
-        <p class="card-text">Text</p>
+        <p class="card-text">{{commentProp.body}}</p>
+        <sub>From: {{commentProp.creatorEmail}}</sub>
       </div>
     </div>
   </div>
@@ -12,7 +13,7 @@
 <script>
 export default {
   name: "",
-  props: [""],
+  props: ["commentProp"],
   mounted(){
 
   },
@@ -20,13 +21,29 @@ export default {
     return {};
   },
   computed: {
-    comment
+    isCreator(){
+      return this.$auth.userInfo.email
+    },
+    comments(){
+      return this.$store.state.comments
+    }
+
   },
-  methods: {},
+  methods: {
+    deletePost(){
+      this.$store.dispatch("deleteComment", this.commentProp.id)
+    }
+  },
   components: {}
 }
 </script>
 
-<style>
+<style scoped>
+.pointer{
+  cursor: pointer;
+  font-size: 1.3em;
+}
+.grow:hover{
 
+}
 </style>

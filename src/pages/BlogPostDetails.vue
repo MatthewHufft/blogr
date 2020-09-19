@@ -4,7 +4,13 @@
       <div class="col-12">
         <h1>{{blog.title}}</h1>
         <img :src="blog.imgUrl" class="w-50 shadow-lg rounded mt-5" alt />
-        <p>{{blog.body}}</p>
+        <p>{{blog.body}} <i
+            class="fa fa-pencil text-warning grow shadow"
+            aria-hidden="true"
+            @click="editToggle = !editToggle"
+            v-if="isCreator"
+          ></i></p>
+        
         <p>Created By: {{blog.creatorEmail}}</p>
         <form class="form-inline" @submit.prevent="createComment" >
           <input
@@ -18,22 +24,27 @@
         </form>
       </div>
       <div class="row comments">
-
+        <CommentComponent v-for="comment in comments" :key="comment.id" :commentProp="comment" />
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import CommentComponent from "../components/CommentComponent.vue"
 export default {
   name: "blog-post-details",
   props: [""],
   mounted(){
-    this.$store.dispatch("getActiveBlog", this.$route.params.blogId)
+    this.$store.dispatch("getActiveBlog", this.$route.params.blogId);
+    this.$store.dispatch("getComments", this.$route.params.blogId)
+    this.$store.dispatch("getProfile")
   },
   data(){
     return {
       newComment: {},
+      postData: {}, 
+      editToggle: false 
     };
   },
   computed: {
@@ -44,18 +55,27 @@ export default {
       return this.$store.state.comments
     },
     isCreator(){
-      return this.$store.state.profile.email == this.blog.creatorEmail;
+      return this.$store.state.profile.email === this.blog.creatorEmail
     }
   },
   methods: {
     createComment(){
-      this.$store.dispatch('createComment', newComment)
+      let payload = {
+        creatorEmail: this.$auth.userInfo.email,
+        blog: this.$route.params.blogId,
+        body: this.newComment.body
+      }
+      this.$store.dispatch('createComment', payload)
     }
   },
-  components: {}
+
+  components: {
+    CommentComponent
+    }
 }
 </script>
 
-<style>
-
+<style scoped>
+.grow { transition: all .2s ease-in-out; }
+  .grow:hover { transform: scale(1.1); }
 </style>

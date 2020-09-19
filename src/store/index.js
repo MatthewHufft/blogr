@@ -25,6 +25,12 @@ export default new Vuex.Store({
     setComments(state, comments){
       state.comments= comments
     },
+    deleteBlogPost(state, blogId){
+      state.blogs = state.blogs.filter(b => b.id != blogId)
+    },
+    deleteComment(state, commentId){
+      state.comments = state.comments.filter(c => c.id != commentId)
+    }
   },
   actions: {
     async getProfile({ commit }) {
@@ -43,6 +49,23 @@ export default new Vuex.Store({
         console.error();
       }
     },
+    async getActiveBlog({ commit }, blogId) {
+      try {
+        let res = await api.get("blogs/" + blogId)
+        commit("setActiveBlog", res.data)
+        commit("setComments", res.data.comments)
+      } catch (error) {
+        console.error();
+      }
+    },
+    async getComments({ commit }, blogId){
+      try {
+        let res = await api.get("blogs/" + blogId + "/comments")
+        commit("setComments", res.data)
+      } catch (error) {
+        console.error(error);
+      }
+    },
     async createBlogPost({ commit }, newBlog) {
       try {
         let res = await api.post("blogs", newBlog)
@@ -51,19 +74,26 @@ export default new Vuex.Store({
         console.error();
       }
     },
-    async getActiveBlog({ commit }, blogId) {
-      try {
-        let res = await api.get("blogs/" + blogId)
-        console.log(res.data)
-        commit("setActiveBlog", res.data)
-        commit("setComments", res.data.comments)
-      } catch (error) {
-        console.error();
-      }
-    },
     async createComment({ commit }, newComment){
       try {
         let res = await api.post("comments", newComment)
+        commit("setComments", [...this.state.comments, res.data])
+      } catch (error) {
+        console.error(error);
+      }
+    },
+    async deleteBlogPost({ commit }, blogId){
+      try {
+        let res = await api.delete("blogs/" + blogId)
+        commit("deleteBlogPost", blogId)
+      } catch (error) {
+        console.error(error);
+      }
+    },
+    async deleteComment({ commit }, commentId){
+      try {
+        let res = await api.delete("comments/"+ commentId)
+        commit("deleteComment", commentId)
       } catch (error) {
         console.error(error);
       }
