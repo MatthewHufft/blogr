@@ -1,7 +1,7 @@
 <template>
   <div class="col-12">
     <div class="card">
-      <i class="fa fa-trash-o text-danger align-self-end pt-1 pr-2 pointer" aria-hidden="true" @click="deletePost" v-if="this.isCreator == this.commentProp.creatorEmail" ></i>
+      <i class="fa fa-trash-o text-danger align-self-end pt-1 pr-2 pointer grow" aria-hidden="true" @click="deletePost" v-if="this.isCreator == this.commentProp.creatorEmail" ></i>
       <div class="card-body">
         <p class="card-text">{{commentProp.body}}</p>
         <sub>From: {{commentProp.creatorEmail}}</sub>
@@ -43,7 +43,7 @@ export default {
   cursor: pointer;
   font-size: 1.3em;
 }
-.grow:hover{
+.grow { transition: all .2s ease-in-out; }
+  .grow:hover { transform: scale(1.1); }
 
-}
 </style>

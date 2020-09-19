@@ -9,6 +9,7 @@
 import Navbar from "@/components/navbar";
 import { onAuth } from "@bcwdev/auth0-vue";
 import { setBearer } from "./services/AxiosService";
+import swal from 'sweetalert';
 export default {
   name: "App",
   async beforeCreate() {

@@ -25,6 +25,9 @@ export default new Vuex.Store({
     setComments(state, comments){
       state.comments= comments
     },
+    editPost(state, postData){
+      state.activeBlog = postData
+    },
     deleteBlogPost(state, blogId){
       state.blogs = state.blogs.filter(b => b.id != blogId)
     },
@@ -94,6 +97,16 @@ export default new Vuex.Store({
       try {
         let res = await api.delete("comments/"+ commentId)
         commit("deleteComment", commentId)
+      } catch (error) {
+        console.error(error);
+      }
+    },
+
+    async editPost({ commit }, postData){
+      try {
+        let res = await api.put('blogs/' + postData.id, postData )
+        commit('editPost', res.data)
+        console.log(res.data)
       } catch (error) {
         console.error(error);
       }

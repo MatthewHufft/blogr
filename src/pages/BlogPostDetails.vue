@@ -5,12 +5,21 @@
         <h1>{{blog.title}}</h1>
         <img :src="blog.imgUrl" class="w-50 shadow-lg rounded mt-5" alt />
         <p>{{blog.body}} <i
-            class="fa fa-pencil text-warning grow shadow"
+            class="fa fa-pencil text-warning grow shadow pointer"
             aria-hidden="true"
             @click="editToggle = !editToggle"
             v-if="isCreator"
           ></i></p>
-        
+          <form class="form-inline" @submit.prevent="editPost" v-if="editToggle">
+          <input
+            type="text"
+            class="form-control"
+            aria-describedby="helpId"
+            v-model="postData.body"
+          />
+          <button type="submit" class="btn btn-warning">Edit Post</button>
+          </form>
+
         <p>Created By: {{blog.creatorEmail}}</p>
         <form class="form-inline" @submit.prevent="createComment" >
           <input
@@ -66,7 +75,13 @@ export default {
         body: this.newComment.body
       }
       this.$store.dispatch('createComment', payload)
+    },
+
+    editPost(){
+      this.postData.id = this.blog.id
+      this.$store.dispatch('editPost', this.postData)
     }
+
   },
 
   components: {
@@ -76,6 +91,10 @@ export default {
 </script>
 
 <style scoped>
+.pointer{
+  cursor: pointer;
+  font-size: 1.3em;
+}
 .grow { transition: all .2s ease-in-out; }
   .grow:hover { transform: scale(1.1); }
 </style>
