@@ -5,9 +5,6 @@
         <img class="rounded" :src="profile.picture" alt="" />
         <p>{{ profile.email }}</p>
       </div>
-      <div class="col">
-        <h1>Welcome {{ profile.name }}</h1>
-      </div>
     </div>
     <div class="row">
       <BlogPostComponent v-for="blog in blogs" :key="blog.id" :blogProp="blog" />

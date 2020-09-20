@@ -25,18 +25,18 @@
     <div class="collapse navbar-collapse" id="navbarText">
       <ul class="navbar-nav mr-auto">
         <li class="nav-item" :class="{ active: $route.name == 'Home' }">
-          <router-link :to="{ name: 'Home' }" class="nav-link"><button class="btn btn-light">Home</button></router-link>
+          <router-link :to="{ name: 'Home' }" class="nav-link"><button class="btn btn-dark nav-link text-light">Home</button></router-link>
         </li>
         <li
           class="nav-item"
           v-if="$auth.isAuthenticated"
           :class="{ active: $route.name == 'Profile' }"
-        >
-          <router-link class="nav-link" :to="{ name: 'Profile' }"><button class="btn btn-light">Profile</button></router-link>
+          >
+          <router-link class="nav-link" :to="{ name: 'Profile' }"><button class="btn btn-dark nav-link text-light">Profile</button></router-link>
         </li>
-        <li class="nav-item">
+        <li class="nav-item mt-2">
           <div class="dropdown">
-            <button class="btn btn-light dropdown-toggle my-2" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <button class="btn btn-dark dropdown-toggle nav-link text-light" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               New Post
             </button>
             <div class="dropdown-menu post-form px-2" aria-labelledby="dropdownMenu2">
@@ -72,7 +72,6 @@
           </div>
         </li>
       </ul>
-      <!-- New Blog Form  -->
       <span class="navbar-text">
         <button class="btn btn-success" @click="login" v-if="!$auth.isAuthenticated">Login</button>
         <button class="btn btn-danger" @click="logout" v-else>logout</button>
