@@ -21,7 +21,7 @@
           </form>
 
         <p>Created By: {{blog.creatorEmail}}</p>
-        <form class="form-inline" @submit.prevent="createComment" >
+        <form class="form-inline pb-2" @submit.prevent="createComment" >
           <input
             type="text"
             class="form-control"
@@ -29,7 +29,7 @@
             aria-describedby="helpId"
             v-model="newComment.body"
           />
-          <button type="submit" class="btn btn-warning">Send</button>
+          <button type="submit" class="btn btn-warning"><i class="fa fa-arrow-circle-right big-icon" aria-hidden="true"></i></button>
         </form>
       </div>
       <div class="row comments">

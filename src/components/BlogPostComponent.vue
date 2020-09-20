@@ -1,5 +1,5 @@
 <template>
-  <div class="col-3 m-1 d-flex flex-column">
+  <div class="col-3 mb-2 d-flex flex-column">
     <router-link :to="{name: 'blog-post-details', params: {blogId: blogProp.id}}">
     <div class="card">
       

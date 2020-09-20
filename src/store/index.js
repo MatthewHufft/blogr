@@ -1,5 +1,6 @@
+
 import Vue from "vue";
-import Vuex from "vuex";
+import Vuex, { Store } from "vuex";
 import router from "../router";
 import { api } from "../services/AxiosService.js";
 
@@ -10,6 +11,7 @@ export default new Vuex.Store({
     profile: {},
     blogs: [],
     activeBlog: {},
+    activeComment: {},
     comments: []
   },
   mutations: {
@@ -22,11 +24,17 @@ export default new Vuex.Store({
     setActiveBlog(state, blog){
       state.activeBlog = blog
     },
+    setActiveComment(state, comment){
+      state.activeComment= comment
+    },
     setComments(state, comments){
       state.comments= comments
     },
     editPost(state, postData){
       state.activeBlog = postData
+    },
+    editComment(state, CommentData){
+      state.activeComment = CommentData
     },
     deleteBlogPost(state, blogId){
       state.blogs = state.blogs.filter(b => b.id != blogId)
@@ -52,11 +60,28 @@ export default new Vuex.Store({
         console.error();
       }
     },
+    async getUserBlogPosts({ commit }) {
+      try {
+        let res = await api.get("profile/blogs");
+        console.log(res.data)
+        commit("setBlogPosts", res.data)
+      } catch (error) {
+        console.error();
+      }
+    },
     async getActiveBlog({ commit }, blogId) {
       try {
         let res = await api.get("blogs/" + blogId)
         commit("setActiveBlog", res.data)
         commit("setComments", res.data.comments)
+      } catch (error) {
+        console.error();
+      }
+    },
+    async setActiveComment({ commit }, commentProp) {
+      try {
+        let res = await api.get("blogs/" + commentProp.blog + "/comments")
+        commit("setActiveComment", res.data)
       } catch (error) {
         console.error();
       }
@@ -104,8 +129,18 @@ export default new Vuex.Store({
 
     async editPost({ commit }, postData){
       try {
-        let res = await api.put('blogs/' + postData.id, postData )
+        let res = await api.put('blogs/' + postData.id, postData)
         commit('editPost', res.data)
+        console.log(res.data)
+      } catch (error) {
+        console.error(error);
+      }
+    },
+    async editComment({ commit }, commentData){
+      try {
+        let res = await api.put('comments/' + commentData.id, commentData )
+        commit('editComment', res.data)
+        this.dispatch("getComments", res.data.blog)
         console.log(res.data)
       } catch (error) {
         console.error(error);
