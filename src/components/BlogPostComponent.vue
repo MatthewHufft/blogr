@@ -1,7 +1,7 @@
 <template>
-  <div class="col-3 mb-2 d-flex flex-column">
+  <div class="col-3 d-flex flex-column">
     <router-link :to="{name: 'blog-post-details', params: {blogId: blogProp.id}}">
-    <div class="card">
+    <div class="card mt-3 bg-grad">
       
       <img class="card-img-top" :src="blogProp.imgUrl">
       <div class="card-body">
@@ -36,5 +36,7 @@ export default {
 </script>
 
 <style scoped>
-
+  .bg-grad{
+    background-image: linear-gradient(-20deg, #2b5876 0%, #4e4376 100%);
+  }
 </style>

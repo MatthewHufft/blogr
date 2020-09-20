@@ -1,16 +1,14 @@
 <template>
-  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <nav class="navbar navbar-expand-lg navbar-light bg-trans">
     <router-link class="navbar-brand d-flex" :to="{ name: 'Home' }">
-      <div class="d-flex flex-column align-items-center">
-        <img alt="Vue logo" src="../assets/logo.png" style="transform: rotate(-90deg);width: 25px;" />
+      <div class="d-flex align-items-center">
         <img
-          alt="Vue logo"
-          src="../assets/logo.png"
-          style="transform: rotate(-90deg);width: 25px;margin-top: -10px;"
+          src="../assets/drinks.png"
+          width="40px;"
         />
       </div>
-      <div>
-        <h3 style="color: green">loggr</h3>
+      <div class="d-flex align-items-center text-light mt-3">
+        <h3 style="font-family: 'Satisfy', cursive;">Cheers</h3>
       </div>
     </router-link>
     <button
@@ -27,18 +25,18 @@
     <div class="collapse navbar-collapse" id="navbarText">
       <ul class="navbar-nav mr-auto">
         <li class="nav-item" :class="{ active: $route.name == 'Home' }">
-          <router-link :to="{ name: 'Home' }" class="nav-link"><button class="btn btn-warning">Home</button></router-link>
+          <router-link :to="{ name: 'Home' }" class="nav-link"><button class="btn btn-light">Home</button></router-link>
         </li>
         <li
           class="nav-item"
           v-if="$auth.isAuthenticated"
           :class="{ active: $route.name == 'Profile' }"
         >
-          <router-link class="nav-link" :to="{ name: 'Profile' }"><button class="btn btn-warning">Profile</button></router-link>
+          <router-link class="nav-link" :to="{ name: 'Profile' }"><button class="btn btn-light">Profile</button></router-link>
         </li>
         <li class="nav-item">
           <div class="dropdown">
-            <button class="btn btn-warning dropdown-toggle my-2" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <button class="btn btn-light dropdown-toggle my-2" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               New Post
             </button>
             <div class="dropdown-menu post-form px-2" aria-labelledby="dropdownMenu2">
@@ -120,5 +118,7 @@ export default {
 .post-form{
   min-width: 15rem;
 }
-
+.bg-trans{
+  background-image: linear-gradient( 109.6deg,  rgba(0,0,0,0.93) 11.2%, rgba(63,61,61,1) 78.9% );
+}
 </style>
